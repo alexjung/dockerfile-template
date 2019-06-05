@@ -2,6 +2,8 @@
 
 This project provides a basic `Dockerfile` and instructions for building and running it. Feel free to suggest improvements or fork it for your own Dockercontainter.
 
+## Security
+**Please make sure to always use the latest version of Docker as critical bugs are reported and fixed regularly!**
 
 ## Build Image
 Execute this in the directory where the `Dockerfile` is located.
