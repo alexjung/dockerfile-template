@@ -6,9 +6,11 @@ This project provides a basic `Dockerfile` and instructions for building and run
 **Please make sure to always use the latest version of Docker as critical bugs are reported and fixed regularly!**
 
 ## Build Image
-Execute this in the directory where the `Dockerfile` is located.
+Execute this in the directory where the `Dockerfile` is located to build the image with your user (id and group) to be used as user in the container (this should prevent issues when accessing files in the shared directory):
 ```bash
-docker build --tag=template .
+export UID=$(id -u)
+export GID=$(id -g)
+docker build --build-arg USER=$USER --build-arg UID=$UID --build-arg GID=$GID --tag=template .
 ```
 ## Run Container
 This will start the container's bash in interactive mode and mount a shared directory.  

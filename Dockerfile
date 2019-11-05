@@ -30,18 +30,23 @@ RUN apt-get update && \
 # RUN pip3 install --upgrade pip
 # RUN pip3 install <package-name>
 
-# add local user (TODO: Change to sth. meaningful)
-ENV USERNAME template-user
-RUN useradd -m $USERNAME
-USER $USERNAME
-WORKDIR /home/$USERNAME
+# add local user
+# TODO: These are default parameters and
+# should be overwritten by the build call
+ARG USER template-user
+ARG UID=1000
+ARG GID=1000
+RUN useradd -m ${USER} --uid=${UID}
 
-ENV HOME /home/$USERNAME
+USER ${UID}:${GID}
+WORKDIR /home/${USER}
+
+ENV HOME /home/${USER}
 
 ###########################
 ### Your code goes here ###
 ###########################
 
-RUN mkdir $HOME/share
-ADD . $HOME/share
-WORKDIR $HOME/share
+RUN mkdir /home/${USER}/share
+ADD . /home/${USER}/share
+WORKDIR /home/${USER}/share
