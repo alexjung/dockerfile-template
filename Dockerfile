@@ -33,10 +33,15 @@ RUN apt-get update && \
 # add local user
 # TODO: These are default parameters and
 # should be overwritten by the build call
-ARG USER template-user
+ARG USER=template-user
 ARG UID=1000
 ARG GID=1000
+ARG G_NAME=template-user
+
 RUN useradd -m ${USER} --uid=${UID}
+
+RUN if [ "$USER" != "$G_NAME" ]; then groupadd -g ${GID} ${G_NAME} ; fi
+RUN if [ "$USER" != "$G_NAME" ]; then usermod -g ${G_NAME} ${USER} ; fi
 
 USER ${UID}:${GID}
 WORKDIR /home/${USER}
